@@ -59,12 +59,14 @@ export class ListDepartmentComponent {
      }
 
      editDepartment(departmentId: number) {
+      console.log("department id"+departmentId);
       const dialogRef = this.dialog.open(UpdateDepartmentComponent, {
         hasBackdrop: true, // Close the dialog when clicking outside
         data: {
           id: departmentId
          }
       });
+      console.log("department id"+departmentId);
       dialogRef.afterClosed().subscribe(res => {
         
         if (res.data=='updated'){

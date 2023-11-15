@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from 'express';
+import { Department } from 'src/app/models/Department.model';
 import { DepartmentService } from 'src/app/service/department.service';
 
 @Component({
@@ -9,12 +10,15 @@ import { DepartmentService } from 'src/app/service/department.service';
   styleUrls: ['./update-department.component.css']
 })
 export class UpdateDepartmentComponent {
+  departmentId:Department={} as Department;
   constructor(
     private departmentService:DepartmentService,
     private router: Router,  
     public dialogRef: MatDialogRef<UpdateDepartmentComponent>,
-
-    ){}
+    @Inject(MAT_DIALOG_DATA) public data: any
+    ){
+      console.log(data.id);
+    }
 
 
   onSubmit() {
@@ -24,8 +28,8 @@ export class UpdateDepartmentComponent {
     //   this.dialogRef.close();
     // })
 
-    
   }
+  
   onClose(){
     this.dialogRef.close();
   }
