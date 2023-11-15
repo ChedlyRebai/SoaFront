@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 import { Department } from '../models/Department.model';
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -9,9 +11,15 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DepartmentService  {
-  apiURL: string = 'http://localhost:8080/api/departments';
-constructor(private http : HttpClient) {
 
+  apiURL: string = '';
+ 
+constructor(private http : HttpClient) {
+  if(environment.production){
+    this.apiURL = environment.apiUrl + '/api/departments';
+  }else{
+    this.apiURL= environment.apiUrl + '/api/departments';
+  }
 }
 
 addDepartment(dep:Department):Observable<Department>{

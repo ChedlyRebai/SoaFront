@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Employee } from '../models/Employee.model';
 
 const httpOptions = {
@@ -11,9 +12,16 @@ const httpOptions = {
 })
 
 export class EmployeeService {
+  
   apiURL: string = 'http://localhost:8080/api/employees';
-  constructor(private http : HttpClient) {
+  
+constructor(private http : HttpClient) {
+  if(environment.production){
+    this.apiURL = environment.apiUrl + '/api/emplyees';
+  }else{
+    this.apiURL= environment.apiUrl + '/api/employees';
   }
+}
 
   listEmployees():Observable<Employee[]>{
     return this.http.get<Employee[]>(this.apiURL);
