@@ -5,6 +5,7 @@ import { Department } from 'src/app/models/Department.model';
 import { DepartmentService } from 'src/app/service/department.service';
 import { AddDepartmentComponent } from '../add-department/add-department.component';
 import { DeleteDepartmentComponent } from '../delete-department/delete-department.component';
+import { UpdateDepartmentComponent } from '../update-department/update-department.component';
 
 @Component({
   selector: 'app-list-department',
@@ -58,7 +59,22 @@ export class ListDepartmentComponent {
      }
 
      editDepartment(departmentId: number) {
-
+      const dialogRef = this.dialog.open(UpdateDepartmentComponent, {
+        hasBackdrop: true, // Close the dialog when clicking outside
+        data: {
+          id: departmentId
+         }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        
+        if (res.data=='updated'){
+          this.departmentService.listDepartment().subscribe((data)=>{
+            console.log(data);
+            console.log('update')
+            this.departments=data;
+           })
+        }
+      })
      }
 
     //  deleteDepartment(departmentId: number) {
