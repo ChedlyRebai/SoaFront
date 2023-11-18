@@ -4,6 +4,7 @@ import { Employee } from 'src/app/models/Employee.model';
 import { EmployeeService } from 'src/app/service/employee.service';
 
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/service/auth.service';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from '../delete-employee/delete-employee.component';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
@@ -15,7 +16,7 @@ import { UpdateEmployeeComponent } from '../update-employee/update-employee.comp
 export class EmployeeComponent implements OnInit {
   employees: Employee[]=[]  ;
 
-  constructor(public dialog: MatDialog,private router: Router, private employeeService: EmployeeService) { 
+  constructor(public authService:AuthService ,public dialog: MatDialog,private router: Router, private employeeService: EmployeeService) { 
        
   }
 
