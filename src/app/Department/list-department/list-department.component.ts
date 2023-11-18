@@ -84,24 +84,26 @@ export class ListDepartmentComponent {
     //  }
 
 
-     deleteDepartment(employeeId: number) {
-      // this.employeeService.deleteEmployee(employeeId).subscribe((data)=>{
-      //   console.log(data);
-      //   this.ngOnInit();
-      //  })
-  
-      let dialogRef = this.dialog.open(DeleteDepartmentComponent, {
-        data: employeeId
-      })
-      dialogRef.afterClosed().subscribe(res => {
-        // received data from dialog-component
-        if (res.data=='deleted'){
-          this.departmentService.listDepartment().subscribe((data)=>{
-            console.log(data);
-            console.log('deleted')
-            this.departments=data;
-           })
-        }
-      })
-    }
+      deleteDepartment(employeeId: number) {
+        // this.employeeService.deleteEmployee(employeeId).subscribe((data)=>{
+        //   console.log(data);
+        //   this.ngOnInit();
+        //  })
+    
+        let dialogRef = this.dialog.open(DeleteDepartmentComponent, {
+          data: employeeId
+        })
+        dialogRef.afterClosed().subscribe(res => {
+          // received data from dialog-component
+          if (res.data=='deleted'){
+            
+              this.departmentService.listDepartment().subscribe((updatedData) => {
+                console.log(updatedData);
+                console.log('updated');
+                this.departments = updatedData;
+              });
+            
+          }
+        })
+      }
 }

@@ -16,8 +16,11 @@ private dialogRef: MatDialogRef<DeleteDepartmentComponent>, private deparmentSer
 
 
 deleteDepartment(){
-  this.deparmentService.deleteDepartment(this.data).subscribe((data)=>{console.log(data)})
-  this.dialogRef.close({ data: 'deleted' })
+  
+  this.deparmentService.deleteDepartment(this.data).subscribe((data)=>{
+    this.dialogRef.close({ data: 'deleted' })
+  })
+  
 }
 
 onClose(){

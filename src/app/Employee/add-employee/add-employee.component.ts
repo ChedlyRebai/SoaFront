@@ -42,7 +42,8 @@ export class AddEmployeeComponent {
     this.employee.department= this.departments.find((d)=>d.id==this.departmentId);
     this.employeeService.addEmployee(this.employee).subscribe((data)=>{
       console.log(data);
-      this.dialogRef.close();
+      this.dialogRef.close({ data: 'added' })
+      
     })
   }
   onClose(){

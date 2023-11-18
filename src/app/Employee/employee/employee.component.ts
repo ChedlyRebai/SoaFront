@@ -25,6 +25,17 @@ export class EmployeeComponent implements OnInit {
       hasBackdrop: true,
       data: { /* optional data to pass to the dialog component */ }
     });
+
+    dialogRef.afterClosed().subscribe(res => {
+      // received data from dialog-component
+      if (res.data=='added'){
+        this.employeeService.listEmployees().subscribe((data)=>{
+          console.log(data);
+          console.log('added')
+          this.employees=data;
+         })
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -42,7 +53,7 @@ export class EmployeeComponent implements OnInit {
       
       position: { top: '50%', left: '50%' },
       hasBackdrop: true, // Close the dialog when clicking outside
-      data: { 
+      data: {
         id: employeeId
        }
     });
@@ -60,23 +71,19 @@ export class EmployeeComponent implements OnInit {
   }
 
   deleteEmployee(employeeId: number) {
-    // this.employeeService.deleteEmployee(employeeId).subscribe((data)=>{
-    //   console.log(data);
-    //   this.ngOnInit();
-    //  })
 
     let dialogRef = this.dialog.open(DeleteEmployeeComponent, {
       data: employeeId
     })
-    dialogRef.afterClosed().subscribe(res => {
-      // received data from dialog-component
-      if (res.data=='deleted'){
+    dialogRef.afterClosed().subscribe(res => {  
+      setTimeout(() => {
+
         this.employeeService.listEmployees().subscribe((data)=>{
           console.log(data);
           console.log('deleted')
           this.employees=data;
          })
-      }
+        },300);
     })
   }
 }

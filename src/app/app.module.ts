@@ -15,6 +15,7 @@ import { EmployeeComponent } from './Employee/employee/employee.component';
 import { UpdateEmployeeComponent } from './Employee/update-employee/update-employee.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { AppComponent } from './app.component';
     UpdateEmployeeComponent,
     DeleteEmployeeComponent,
     DeleteDepartmentComponent,
-    UpdateDepartmentComponent
+    UpdateDepartmentComponent,
+    LoginComponent
   ],
   imports: [
     MatDialogModule,

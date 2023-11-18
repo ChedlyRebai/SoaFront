@@ -36,8 +36,17 @@ deleteDepartment(id : number){
   return this.http.delete(url, httpOptions);
 }
 
-updateDepartment(department : Department):Observable<Department>{
-  return this.http.put<Department>(this.apiURL, department, httpOptions);
+getDepartment(id : number):Observable<Department>{
+  const url = `${this.apiURL}/${id}`;
+  return this.http.get<Department>(url);
+}
+
+
+updateDepartment(id:number,department : Department):Observable<Department>{
+  const url = `http://localhost:8080/api/departments/7`;
+  console.log(url);
+  console.log(department);
+  return this.http.put<Department>(this.apiURL,department);
 }
 
 }

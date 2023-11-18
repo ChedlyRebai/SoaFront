@@ -16,8 +16,10 @@ export class DeleteEmployeeComponent {
 
 
   deleteUser(){
-    this.employeeService.deleteEmployee(this.data).subscribe((data)=>{console.log(data)})
-    this.dialogRef.close({ data: 'deleted' })
+    this.employeeService.deleteEmployee(this.data).subscribe((data)=>{
+      this.dialogRef.close({ data: 'deleted' })
+    })
+    
   }
 
   onClose(){

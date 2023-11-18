@@ -12,7 +12,6 @@ import { EmployeeService } from 'src/app/service/employee.service';
   styleUrls: ['./update-employee.component.css']
 })
 export class UpdateEmployeeComponent {
-
   employee:Employee={} as Employee;
   departments:Department[] = [];
   departmentId:number=0;
@@ -23,10 +22,9 @@ export class UpdateEmployeeComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
     ){
       this.departmentService.listDepartment().subscribe((data)=>{
-        
         this.departments=data;
-        
-        })
+      })
+
       console.log(data.id);
         this.employeeService.consulterEmployee(data.id).subscribe((data)=>{
           this.employee=data;
@@ -41,14 +39,13 @@ export class UpdateEmployeeComponent {
         this.router.navigate(['employee']);
       })
   }*/
-
   
+
   onSubmit() {
     this.employee.department= this.departments.find((d)=>d.id==this.departmentId);
     this.employeeService.addEmployee(this.employee).subscribe((data)=>{
       console.log(data);
       this.dialogRef.close({ data: 'updated' })
-      
     })
   }
 
@@ -57,7 +54,6 @@ export class UpdateEmployeeComponent {
   }
 
   onBackdropClick(): void {
-    
      this.dialogRef.close();
   }
 }
