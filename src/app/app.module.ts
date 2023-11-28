@@ -16,6 +16,7 @@ import { UpdateEmployeeComponent } from './Employee/update-employee/update-emplo
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { OnBoardingComponent } from './on-boarding/on-boarding.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { LoginComponent } from './login/login.component';
     DeleteEmployeeComponent,
     DeleteDepartmentComponent,
     UpdateDepartmentComponent,
-    LoginComponent
+    LoginComponent,
+    OnBoardingComponent
   ],
   imports: [
     MatDialogModule,

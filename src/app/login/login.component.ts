@@ -6,21 +6,28 @@ import { AuthService } from '../service/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-user =new User();
-erreur=0;
-constructor(public authService : AuthService,
-  private router: Router) { }
-  onLoggedin(){
-    console.log(this.user);
-    let isValidUser: Boolean = this.authService.SignIn(this.user);
-    if (isValidUser)
-    this.router.navigate(['/']);
-    else
-    this.erreur = 1;
+  user = new User();
+  err: number = 0;
+  erreur = 0;
+  constructor(public authService: AuthService, private router: Router) {}
+  
+
+  onLoggedin()
+    {
+      this.authService.login(this.user).subscribe({
+        next: (data) => {
+          let jwToken = data.headers.get('Authorization')!;
+          this.authService.saveToken(jwToken);
+           this.router.navigate(['/']); 
+        },
+        error: (err: any) => {
+        this.err = 1; 
+        }
+        });  
     }
 
-    
+
 }

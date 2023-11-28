@@ -33,14 +33,11 @@ export class UpdateDepartmentComponent {
      console.log(data);
      this.dialogRef.close();
   })*/
-  this.department={
-    id:7,
-    name:"ched",
-    description:"77",
-    location:"88"
-    
-  }
-    this.departmentService.updateDepartment(7,this.department).subscribe((data)=>{
+  
+    console.log(this.department);
+    console.log(this.departmentId);
+
+    this.departmentService.updateDepartment(this.departmentId,this.department).subscribe((data)=>{
       console.log(data);
       console.log(this.department)
       

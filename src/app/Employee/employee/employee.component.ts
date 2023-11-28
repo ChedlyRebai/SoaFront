@@ -4,7 +4,9 @@ import { Employee } from 'src/app/models/Employee.model';
 import { EmployeeService } from 'src/app/service/employee.service';
 
 import { MatDialog } from '@angular/material/dialog';
+import { Image } from 'src/app/models/Image.model';
 import { AuthService } from 'src/app/service/auth.service';
+import { ModalService } from 'src/app/service/modal.service';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from '../delete-employee/delete-employee.component';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
@@ -15,10 +17,12 @@ import { UpdateEmployeeComponent } from '../update-employee/update-employee.comp
 })
 export class EmployeeComponent implements OnInit {
   employees: Employee[]=[]  ;
-
-  constructor(public authService:AuthService ,public dialog: MatDialog,private router: Router, private employeeService: EmployeeService) { 
+  nameContain:String = "";
+  constructor(public modalService:ModalService,public authService:AuthService ,public dialog: MatDialog,private router: Router, private employeeService: EmployeeService) { 
        
   }
+
+  
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
@@ -39,12 +43,52 @@ export class EmployeeComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    this.employeeService.listEmployees().subscribe((data)=>{
-      console.log(data);
-      this.employees=data;
-     })
+  findByName(){
+    console.log(this.nameContain);
+    if(`${this.nameContain}` === ''){
+      this.ngOnInit();
+    }else{
+    this.employeeService.findByContaininName(`${this.nameContain}`).subscribe(
+      (data)=>{
+        this.employees=data
+      }
+    )
   }
+  }
+
+  // ngOnInit(): void {
+  //   this.employeeService.listEmployees().subscribe((data)=>{
+  //     console.log(data);
+  //     this.employees=data;
+
+  //     this.employees.forEach((emp:Employee) => {
+  //       this.employeeService
+  //       .loadImage(emp.image.idImage )
+  //       .subscribe((img: Image) => {
+  //         emp.image = 'data:' + img.type + ';base64,' + img.image;
+  //       });
+  //       });
+  //    })
+  // }
+
+  ngOnInit(): void {
+    this.employeeService.listEmployees().subscribe((data) => {
+      console.log(data);
+      this.employees = data;
+  
+      this.employees.forEach((emp: Employee) => {
+        if (emp.image) {
+          this.employeeService
+            .loadImage(emp.image.idImage)
+            .subscribe((img: Image) => {
+              emp.imageStr = 'data:' + img.type + ';base64,' + img.image;
+              console.log(emp.imageStr);
+            });
+        }
+      });
+    });
+  }
+  
   
 
   editEmployee(employeeId: number) {
@@ -62,6 +106,7 @@ export class EmployeeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       
       if (res.data=='updated'){
+        this.router.navigate(['']);
         this.employeeService.listEmployees().subscribe((data)=>{
           console.log(data);
           console.log('update')
@@ -87,4 +132,7 @@ export class EmployeeComponent implements OnInit {
         },300);
     })
   }
+
+
+  
 }

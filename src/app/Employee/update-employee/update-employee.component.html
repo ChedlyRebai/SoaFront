@@ -1,53 +1,3 @@
-<!-- 
-
-
-<div class="container mt-4">
-    <h2>Update Employee</h2>
-    <form (ngSubmit)="onSubmit()" >
-      <div class="form-group">
-        <label for="firstName">First Name:</label>
-        <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="employee.firstName" required>
-      </div>
-      <div class="form-group">
-        <label for="lastName">Last Name:</label>
-        <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="employee.lastName" required>
-      </div>
-      <div class="form-group">
-        <label for="salary">Salary:</label>
-        <input type="number" class="form-control" id="salary" name="salary" [(ngModel)]="employee.salary">
-      </div>
-      <div class="form-group">
-        <label for="position">Position:</label>
-        <input type="text" class="form-control" id="position" name="position" [(ngModel)]="employee.position" required>
-      </div>
-      <div class="form-group">
-        <label for="country">Country:</label>
-        <input type="text" class="form-control" id="country" name="country" [(ngModel)]="employee.country" required>
-      </div>
-      <div class="form-group">
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="employee.phoneNumber" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="employee.email" required>
-      </div>
-      
-      <!-- Department dropdown 
-      <div class="form-group">
-        <label for="department">Department:</label>
-        <!-- <select class="form-control" id="department" name="department" [(ngModel)]="employee.department">
-
-          <option value="1">Department 1</option>
-          <option value="2">Department 2</option>
-
-        </select> 
-      </div>
-      <button type="submit" class="btn btn-primary">Add Employee</button>
-    </form>
-  </div> -->
-  
-
 
   <div class="w-full h-full flex justify-center items-center bg-black bg-opacity-50 overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full " id="add-user-modal">
     <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
@@ -105,7 +55,11 @@
                           <label for="Country " class="text-sm font-medium text-gray-900 block mb-2">Salary</label>
                           <input type="number" name="Country" id="Country"  [(ngModel)]="employee.salary" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"    required>
                       </div>
-                       
+
+
+                      <input type="file" (change)="onImageUpload($event)" class="form-control">
+                      <img [src]="myImage" class="card-img-top img-fluid rounded-start"
+                      style="width: 500px; height: 300px" />
                     </div> 
                 </div>
                 <!-- Modal footer -->
