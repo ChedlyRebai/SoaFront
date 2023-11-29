@@ -72,13 +72,16 @@ export class ListDepartmentComponent implements OnInit {
         id: departmentId,
       },
     });
+
     console.log('department id' + departmentId);
+
     dialogRef.afterClosed().subscribe((res) => {
       if (res.data == 'updated') {
         this.departmentService.listDepartment().subscribe((data) => {
           console.log(data);
           console.log('update');
           this.departments = data;
+          this.ngOnInit();
         });
       }
     });
@@ -94,7 +97,7 @@ export class ListDepartmentComponent implements OnInit {
       if (res.data == 'deleted') {
         this.departmentService.listDepartment().subscribe((updatedData) => {
           console.log(updatedData);
-          console.log('updated');
+          console.log('deleted');
           this.departments = updatedData;
         });
       }

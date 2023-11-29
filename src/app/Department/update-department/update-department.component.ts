@@ -34,14 +34,14 @@ export class UpdateDepartmentComponent {
      this.dialogRef.close();
   })*/
   
+
     console.log(this.department);
     console.log(this.departmentId);
 
     this.departmentService.updateDepartment(this.departmentId,this.department).subscribe((data)=>{
       console.log(data);
       console.log(this.department)
-      
-      this.dialogRef.close();
+      this.dialogRef.close({ data: 'updated' });
     });
   }
   

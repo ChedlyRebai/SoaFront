@@ -13,69 +13,53 @@ import { UpdateEmployeeComponent } from '../update-employee/update-employee.comp
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  styleUrls: ['./employee.component.css'],
 })
 export class EmployeeComponent implements OnInit {
-  employees: Employee[]=[]  ;
-  nameContain:String = "";
-  constructor(public modalService:ModalService,public authService:AuthService ,public dialog: MatDialog,private router: Router, private employeeService: EmployeeService) { 
-       
-  }
-
-  
+  employees: Employee[] = [];
+  nameContain: String = '';
+  constructor(
+    public modalService: ModalService,
+    public authService: AuthService,
+    public dialog: MatDialog,
+    private router: Router,
+    private employeeService: EmployeeService
+  ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '250px',
-      hasBackdrop: true,
-      data: { /* optional data to pass to the dialog component */ }
+      hasBackdrop: true,  
+      data: {
+        /* optional data to pass to the dialog component */
+      },
     });
 
-    dialogRef.afterClosed().subscribe(res => {
-      // received data from dialog-component
-      if (res.data=='added'){
-        this.employeeService.listEmployees().subscribe((data)=>{
-          console.log(data);
-          console.log('added')
-          this.employees=data;
-         })
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res.data == 'added') {
+        this.ngOnInit();
       }
-    })
+    });
   }
 
-  findByName(){
+  findByName() {
     console.log(this.nameContain);
-    if(`${this.nameContain}` === ''){
+    if (`${this.nameContain}` === '') {
       this.ngOnInit();
-    }else{
-    this.employeeService.findByContaininName(`${this.nameContain}`).subscribe(
-      (data)=>{
-        this.employees=data
-      }
-    )
+    } else {
+      this.employeeService
+        .findByContaininName(`${this.nameContain}`)
+        .subscribe((data) => {
+          this.employees = data;
+        });
+    }
   }
-  }
-
-  // ngOnInit(): void {
-  //   this.employeeService.listEmployees().subscribe((data)=>{
-  //     console.log(data);
-  //     this.employees=data;
-
-  //     this.employees.forEach((emp:Employee) => {
-  //       this.employeeService
-  //       .loadImage(emp.image.idImage )
-  //       .subscribe((img: Image) => {
-  //         emp.image = 'data:' + img.type + ';base64,' + img.image;
-  //       });
-  //       });
-  //    })
-  // }
 
   ngOnInit(): void {
     this.employeeService.listEmployees().subscribe((data) => {
       console.log(data);
       this.employees = data;
-  
+
       this.employees.forEach((emp: Employee) => {
         if (emp.image) {
           this.employeeService
@@ -88,51 +72,32 @@ export class EmployeeComponent implements OnInit {
       });
     });
   }
-  
-  
 
   editEmployee(employeeId: number) {
     // Add your logic for editing an employee here
     console.log(`Editing employee with ID ${employeeId}`);
     const dialogRef = this.dialog.open(UpdateEmployeeComponent, {
-      
       position: { top: '50%', left: '50%' },
       hasBackdrop: true, // Close the dialog when clicking outside
       data: {
-        id: employeeId
-       }
+        id: employeeId,
+      },
     });
 
-    dialogRef.afterClosed().subscribe(res => {
-      
-      if (res.data=='updated'){
-        this.router.navigate(['']);
-        this.employeeService.listEmployees().subscribe((data)=>{
-          console.log(data);
-          console.log('update')
-          this.employees=data;
-         })
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res.data == 'updated') {
+        this.ngOnInit();
       }
-    })
+    });
+
   }
 
   deleteEmployee(employeeId: number) {
-
     let dialogRef = this.dialog.open(DeleteEmployeeComponent, {
-      data: employeeId
-    })
-    dialogRef.afterClosed().subscribe(res => {  
-      setTimeout(() => {
-
-        this.employeeService.listEmployees().subscribe((data)=>{
-          console.log(data);
-          console.log('deleted')
-          this.employees=data;
-         })
-        },300);
-    })
+      data: employeeId,
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.ngOnInit();
+    });
   }
-
-
-  
 }
