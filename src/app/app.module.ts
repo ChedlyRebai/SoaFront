@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
@@ -17,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { OnBoardingComponent } from './on-boarding/on-boarding.component';
+import { RegisterComponent } from './register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,14 +31,16 @@ import { OnBoardingComponent } from './on-boarding/on-boarding.component';
     DeleteDepartmentComponent,
     UpdateDepartmentComponent,
     LoginComponent,
-    OnBoardingComponent
+    OnBoardingComponent,
+    RegisterComponent
   ],
   imports: [
     MatDialogModule,
     HttpClientModule,
     FormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HotToastModule.forRoot(),
   ],
   providers: [
     {

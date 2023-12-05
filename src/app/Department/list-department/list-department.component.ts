@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 import { Department } from 'src/app/models/Department.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { DepartmentService } from 'src/app/service/department.service';
@@ -18,6 +19,7 @@ export class ListDepartmentComponent implements OnInit {
   departments: Department[] = [];
   catname?: String;
   constructor(
+    private toast: HotToastService,
     public authService: AuthService,
     public dialog: MatDialog,
     private router: Router,
@@ -31,6 +33,7 @@ export class ListDepartmentComponent implements OnInit {
       this.departments = data;
       console.log(this.departments);
     });
+    this.toast.success('Yeah!!')
   }
 
   openDialog() {
@@ -60,6 +63,7 @@ export class ListDepartmentComponent implements OnInit {
         .findByContainName(`${this.catname}`)
         .subscribe((data: Department[]) => {
           this.departments = data;
+          
         });
     }
   }
@@ -81,6 +85,10 @@ export class ListDepartmentComponent implements OnInit {
           console.log(data);
           console.log('update');
           this.departments = data;
+          
+
+          this.toast.success('Yeah!!')
+
           this.ngOnInit();
         });
       }

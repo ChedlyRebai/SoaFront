@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 import { Department } from 'src/app/models/Department.model';
 import { DepartmentService } from 'src/app/service/department.service';
 
@@ -13,6 +14,7 @@ export class UpdateDepartmentComponent {
    departmentId:number=0;
    department:Department={} as Department;
    constructor(
+    private toast: HotToastService,
      private departmentService:DepartmentService,
      private router: Router,  
      public dialogRef: MatDialogRef<UpdateDepartmentComponent>,
@@ -38,7 +40,13 @@ export class UpdateDepartmentComponent {
     console.log(this.department);
     console.log(this.departmentId);
 
-    this.departmentService.updateDepartment(this.departmentId,this.department).subscribe((data)=>{
+    this.departmentService.updateDepartment(this.departmentId,this.department).pipe(
+      this.toast.observe({
+        loading: 'Saving...',
+        success: 'Settings saved!',
+        error: 'Could not save.',
+      })
+    ) .subscribe((data)=>{
       console.log(data);
       console.log(this.department)
       this.dialogRef.close({ data: 'updated' });
