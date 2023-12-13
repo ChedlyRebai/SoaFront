@@ -48,19 +48,60 @@ export class UpdateEmployeeComponent implements OnInit {
         console.log(this.myImage);
       });
   }
+
+  onAddImageemployee() {
+    console.log(
+      "onAddImageemployee:",
+      this.uploadedImage,
+    this.uploadedImage.name,
+    this.employee.id)
+
+
+    this.employeeService
+      .uploadImageemployee(
+        this.uploadedImage,
+        this.uploadedImage.name,
+        this.employee.id
+      )
+      .subscribe((img: Image) => {
+        
+        if (!this.employee.images) {
+          this.employee.images = [];
+        }
+        if (img) {
+          this.employee.images.push(img);
+        } 
+        //img != undefined ? this.employee.images.push(img): "";
+      });
+  }
+
+  supprimerImage(img: Image){
+    let conf = confirm("Etes-vous sûr ?");
+    if (conf)
+    this.employeeService.supprimerImage(img.idImage).subscribe(() => {
+    //supprimer image du tableau currentProduit.images
+    if(this.employee.images != null){
+    const index = this.employee.images.indexOf(img, 0);
+    if (index > -1) {
+    this.employee.images.splice(index, 1);
+    }
+  }
+    });
+    }
+
   ngOnInit(): void {
     console.log(this.data.id);
     this.employeeService.consulterEmployee(this.data.id).subscribe((data) => {
       this.employee = data;
-      console.log(this.employee);
+      console.log(this.employee.images);
     });
 
-    this.employeeService
+    /*  this.employeeService
       .loadImage(this.data.id as number)
       .subscribe((data: Image) => {
         this.myImage = 'data:' + data.type + ';base64,' + data.image;
         console.log(this.myImage);
-      });
+      });*/
   }
 
   /*onSubmit() {
@@ -76,16 +117,27 @@ export class UpdateEmployeeComponent implements OnInit {
       (d) => d.id == this.departmentId
     );
 
+    this.employeeService
+            .updateEmployee(this.employee)
+            .subscribe((prod) => {
+              this.dialogRef.close({ data: 'updated' });
+            
+            });
+
+
+    /*
     if (this.isImageUpdated) {
       this.employeeService
         .uploadImage(this.uploadedImage, this.uploadedImage.name)
+        
         .subscribe((img: Image) => {
           this.employee.image = img;
+          
           this.employeeService
             .updateEmployee(this.employee)
             .subscribe((prod) => {
               this.dialogRef.close({ data: 'updated' });
-            //  this.router.navigate(['produits']);
+              //  this.router.navigate(['produits']);
             });
         });
     } else {
@@ -93,11 +145,35 @@ export class UpdateEmployeeComponent implements OnInit {
         this.dialogRef.close({ data: 'updated' });
         //this.router.navigate(['']);
       });
-    }
+    }*/
     // this.employeeService.addEmployee(this.employee).subscribe((data) => {
     //   console.log(data);
     //   this.dialogRef.close({ data: 'updated' });
     // });
+  }
+
+  onAddImageEmployee() {
+    this.employeeService
+      .uploadImageemployee(
+        this.uploadedImage,
+        this.uploadedImage.name,
+        this.employee.id
+      )
+      .subscribe((img: Image) => {
+        if (!this.employee.images) {
+          this.employee.images = [];
+        }
+        if (img) {
+          this.employee.images.push(img);
+        }
+      });
+  }
+  ondeleteimg(id:number){
+    this.employeeService.deleteImage(id).subscribe((data) => {
+      console.log(data);
+      this.myImage = '';
+      this.isImageUpdated = true;
+    });
   }
 
   onClose() {
@@ -119,4 +195,18 @@ export class UpdateEmployeeComponent implements OnInit {
       };
     }
   }
+
+  deleteImage() {
+    this.employeeService.deleteImage(this.data.id).subscribe((data) => {
+      console.log(data);
+      this.myImage = '';
+      this.isImageUpdated = true;
+    });
+  }
+
+  /*onImageDelete() {
+    this.employee.image = null;
+    this.myImage = '';
+    this.isImageUpdated = true;
+  }*/
 }

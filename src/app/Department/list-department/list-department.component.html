@@ -178,7 +178,7 @@
 
 
           
-            <a href="#" class="flex-shrink-0 w-full group block">
+            <!-- <a href="#" class="flex-shrink-0 w-full group block">
               <div class="flex items-center">
                 <div>
                   <img class="inline-block h-9 w-9 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
@@ -186,10 +186,26 @@
                 <div class="ml-3">
                   <p class="text-sm font-medium text-gray-700 mt-3">{{authService.loggedUser}}</p>
                   <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">View profile</p>
+                 <!-- <p>{{authService.loggedUser}}</p> 
+                </div>
+              </div>
+            </a> -->
+
+
+            <a href="#" class="flex-shrink-0 w-full group block">
+              <div class="flex items-center">
+      
+                <!-- <div>
+                  <img class="inline-block h-9 w-9 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                </div> -->
+                <div class="ml-3">
+                  <h1 class="text-sm text-2xl font-medium text-gray-700 pt-4 ">{{authService.loggedUser}}</h1>
+                  <!-- <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">View profile</p> -->
                  <!-- <p>{{authService.loggedUser}}</p> -->
                 </div>
               </div>
             </a>
+            
           
 
           <!-- <input id="search-field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search" type="search" name="search">
@@ -305,10 +321,7 @@
                     <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                     Add 
                 </button>
-                <a href="#" class="w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
-                    <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"></path></svg>
-                    Export
-                </a>
+                
             </div>
         </div>
     </div>
@@ -337,7 +350,7 @@
                               Description
                           </th>
                             <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                               Number of Employees
+                               <!-- Number of Employees -->
                             </th>
                             
                             <th *ngIf="authService.isAdmin()" scope="col" class="p-4">

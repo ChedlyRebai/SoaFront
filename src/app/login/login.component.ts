@@ -13,21 +13,35 @@ export class LoginComponent {
   err: number = 0;
   erreur = 0;
   constructor(public authService: AuthService, private router: Router) {}
-  
 
-  onLoggedin()
-    {
-      this.authService.login(this.user).subscribe({
-        next: (data) => {
-          let jwToken = data.headers.get('Authorization')!;
-          this.authService.saveToken(jwToken);
-           this.router.navigate(['/']); 
-        },
-        error: (err: any) => {
-        this.err = 1; 
-        }
-        });  
-    }
+  message: string = 'login ou mot de passe erronés..';
 
+  onLoggedi() {
+    this.authService.login(this.user).subscribe({
+      next: (data) => {
+        let jwToken = data.headers.get('Authorization')!;
+        this.authService.saveToken(jwToken);
+        this.router.navigate(['/']);
+      },
+      error: (err: any) => {
+        this.err = 1;
+      },
+    });
+  }
 
+  onLoggedin() {
+    this.authService.login(this.user).subscribe({
+      next: (data) => {
+        let jwToken = data.headers.get('Authorization')!;
+        this.authService.saveToken(jwToken);
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.err = 1;
+        if (err.error.errorCause == 'disabled')
+          this.message =
+            'Utilisateur désactivé, Veuillez contacter votre Administrateur';
+      },
+    });
+  }
 }

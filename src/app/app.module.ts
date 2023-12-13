@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { HotToastModule } from '@ngneat/hot-toast';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { AddDepartmentComponent } from './Department/add-department/add-department.component';
 import { DeleteDepartmentComponent } from './Department/delete-department/delete-department.component';
@@ -19,6 +19,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { OnBoardingComponent } from './on-boarding/on-boarding.component';
 import { RegisterComponent } from './register/register.component';
+import { VerifEmailComponent } from './verif-email/verif-email.component';
+import { ManageImagesComponent } from './manage-images/manage-images.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,9 +34,12 @@ import { RegisterComponent } from './register/register.component';
     UpdateDepartmentComponent,
     LoginComponent,
     OnBoardingComponent,
-    RegisterComponent
+    RegisterComponent,
+    VerifEmailComponent,
+    ManageImagesComponent
   ],
   imports: [
+    ReactiveFormsModule,
     MatDialogModule,
     HttpClientModule,
     FormsModule,

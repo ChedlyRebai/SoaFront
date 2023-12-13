@@ -1,1 +1,185 @@
-<p>register works!</p>
+<!--
+
+  This example requires updating your template:
+
+  ```
+  <html class="">
+  <body class="h-full">
+  ```
+-->
+<div
+  class="bg-gray-50 min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+>
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <img
+      class="mx-auto h-12 w-auto"
+      src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+      alt="Workflow"
+    />
+    
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Sign up to your account
+    </h2>
+  </div>
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <form [formGroup]="myForm" class="space-y-6" action="#" method="POST">
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            username
+          </label>
+          <div class="mt-1">
+            <input
+            formControlName="username"
+            
+              id="email"
+              name="email"
+              type="text"
+              autocomplete="email"
+              required
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+        <span
+          *ngIf="
+            myForm.controls['username'].hasError('required') &&
+            myForm.controls['username'].touched
+          "
+          class="text-danger"
+        >
+          Nom Utilisateur est obligatoire
+        </span>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email address
+          </label>
+          <div class="mt-1">
+            <input
+            formControlName="email"
+              id="email"
+              name="email"
+              type="text"
+              autocomplete="email"
+              required
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+        <span
+          *ngIf="
+            myForm.controls['email'].hasError('required') &&
+            myForm.controls['email'].touched
+          "
+          class="text-danger text-red-500"
+        >
+          email est obligatoire
+        </span>
+
+        <span
+          *ngIf="
+            myForm.controls['email'].hasError('email') &&
+            myForm.controls['email'].touched
+          "
+          class="text-danger text-red-500"
+        >
+          email non valide
+        </span>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <div class="mt-1">
+            <input
+            formControlName="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+        <span
+          *ngIf="
+            myForm.controls['password'].hasError('required') &&
+            myForm.controls['password'].touched
+          "
+          class="text-danger"
+        >
+          mot de passe est obligatoire
+        </span>
+
+        <span
+          *ngIf="
+            myForm.controls['password'].hasError('minlength') &&
+            myForm.controls['password'].touched
+          "
+          class="text-danger"
+        >
+          mot de passe doit contenir au moins 6 caractères
+        </span>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">
+            Confirm Password
+          </label>
+          <div class="mt-1">
+            <input
+            formControlName="confirmPassword"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+
+        <span
+          *ngIf="
+            myForm.controls['confirmPassword'].hasError('required') &&
+            myForm.controls['confirmPassword'].touched
+          "
+          class="text-danger"
+        >
+          confirmer mot de passe est obligatoire
+        </span>
+
+        <span
+          *ngIf="
+            myForm.get('confirmPassword')?.touched &&
+            myForm.get('confirmPassword')?.value !=
+              myForm.get('password')?.value
+          "
+          class="text-danger"
+        >
+          Le mot de passe confrmé ne correspond pas au mot de passe tapé
+        </span>
+
+        <p class="text-red-500">
+          <strong>login ou mot de passe erronés..</strong>
+        </p>
+
+        <div>
+          <button
+            type="button"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            [disabled]="myForm.invalid"
+            (click)="onRegister()"
+          >
+            Sign up
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-6">
+        <div class="relative">
+          <a routerLink="/login">login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

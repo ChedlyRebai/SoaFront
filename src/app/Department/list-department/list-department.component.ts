@@ -33,7 +33,6 @@ export class ListDepartmentComponent implements OnInit {
       this.departments = data;
       console.log(this.departments);
     });
-    this.toast.success('Yeah!!')
   }
 
   openDialog() {
@@ -48,6 +47,7 @@ export class ListDepartmentComponent implements OnInit {
         this.departmentService.listDepartment().subscribe((data) => {
           console.log(data);
           console.log('added');
+          this.toast.success('Department added successfully')
           this.departments = data;
         });
       }
@@ -87,7 +87,7 @@ export class ListDepartmentComponent implements OnInit {
           this.departments = data;
           
 
-          this.toast.success('Yeah!!')
+          this.toast.success('Department updated successfully')
 
           this.ngOnInit();
         });
@@ -106,6 +106,7 @@ export class ListDepartmentComponent implements OnInit {
         this.departmentService.listDepartment().subscribe((updatedData) => {
           console.log(updatedData);
           console.log('deleted');
+          this.toast.success('Department deleted successfully')
           this.departments = updatedData;
         });
       }

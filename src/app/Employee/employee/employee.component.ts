@@ -4,6 +4,7 @@ import { Employee } from 'src/app/models/Employee.model';
 import { EmployeeService } from 'src/app/service/employee.service';
 
 import { MatDialog } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
 import { Image } from 'src/app/models/Image.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { ModalService } from 'src/app/service/modal.service';
@@ -19,6 +20,7 @@ export class EmployeeComponent implements OnInit {
   employees: Employee[] = [];
   nameContain: String = '';
   constructor(
+    private toast: HotToastService,
     public modalService: ModalService,
     public authService: AuthService,
     public dialog: MatDialog,
@@ -37,13 +39,14 @@ export class EmployeeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res.data == 'added') {
+        this.toast.success('Employee added successfully');
         this.ngOnInit();
       }
     });
   }
 
   findByName() {
-    console.log(this.nameContain);
+    
     if (`${this.nameContain}` === '') {
       this.ngOnInit();
     } else {
@@ -51,14 +54,7 @@ export class EmployeeComponent implements OnInit {
         .findByContaininName(`${this.nameContain}`)
         .subscribe((data) => {
           this.employees = data;
-        });
-    }
-  }
-
-  ngOnInit(): void {
-    this.employeeService.listEmployees().subscribe((data) => {
-      console.log(data);
-      this.employees = data;
+          this.employees = data;
 
       this.employees.forEach((emp: Employee) => {
         if (emp.image) {
@@ -70,8 +66,41 @@ export class EmployeeComponent implements OnInit {
             });
         }
       });
-    });
+          console.log(data)
+        });
+    }
   }
+
+  ngOnInit(): void {
+    /*this.employeeService.listEmployees().subscribe((data) => {
+    
+      this.employees = data;
+
+      this.employees.forEach((emp: Employee) => {
+        if (emp.image) {
+          this.employeeService
+            .loadImage(emp.image.idImage)
+            .subscribe((img: Image) => {
+              emp.imageStr = 'data:' + img.type + ';base64,' + img.image;
+              
+            });
+        }
+      });
+    });*/
+ this.chargerEmployee();
+
+  }
+
+  chargerEmployee(){
+    this.employeeService.listEmployees().subscribe((emp) => {
+      console.log(this.employees)
+    this.employees = emp;
+    this.employees.forEach((emp:any) => {
+    emp.imageStr = 'data:' + emp.images[0].type + ';base64,' +
+    emp.images[0].image;
+    });
+    });
+    }
 
   editEmployee(employeeId: number) {
     // Add your logic for editing an employee here
@@ -86,6 +115,7 @@ export class EmployeeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res.data == 'updated') {
+        this.toast.success('Employee updated successfully');
         this.ngOnInit();
       }
     });
@@ -97,6 +127,7 @@ export class EmployeeComponent implements OnInit {
       data: employeeId,
     });
     dialogRef.afterClosed().subscribe((res) => {
+      this.toast.success('Employee deleted successfully');
       this.ngOnInit();
     });
   }

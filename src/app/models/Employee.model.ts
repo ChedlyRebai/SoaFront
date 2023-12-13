@@ -11,6 +11,7 @@ export interface Employee {
     phoneNumber?: string;
     email ?: string;
     image ?: Image;
+    images?: Image[];
     department?: Department;
     departmentName?: string;
     imageStr?: string;

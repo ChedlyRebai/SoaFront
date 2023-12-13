@@ -38,8 +38,6 @@ export class AuthService {
     this.loggedUser = decodedToken.sub;
   }
 
-  
-
   saveToken(jwt: string) {
     localStorage.setItem('jwt', jwt);
     this.token = jwt;
@@ -70,12 +68,10 @@ export class AuthService {
     return validUser;
   }
 
-  isAdmin():Boolean{
-    
-    if (!this.roles)
-    return false;
-    return this.roles.indexOf('ADMIN') >=0;
-    }
+  isAdmin(): Boolean {
+    if (!this.roles) return false;
+    return this.roles.indexOf('ADMIN') >= 0;
+  }
 
   setLoggedUserFromLocalStorage(login: string) {
     this.loggedUser = login;
@@ -94,31 +90,39 @@ export class AuthService {
   apiURL: string = 'http://localhost:10000/users';
 
   login(user: User) {
-    
-    
     return this.http.post<User>(this.apiURL + '/login', user, {
       observe: 'response',
     });
   }
-  
 
   loadToken() {
-
     this.token = localStorage.getItem('jwt')!;
     this.decodeJWT();
-   }
-  
+  }
+
   getToken(): string {
     return this.token;
   }
 
-
   logout() {
     this.loggedUser = undefined!;
     this.roles = undefined!;
-    this.token= undefined!;
+    this.token = undefined!;
     this.isloggedIn = false;
     localStorage.removeItem('jwt');
     this.router.navigate(['/login']);
+  }
+
+  public regitredUser: User = new User();
+  setRegistredUser(user: User) {
+    this.regitredUser = user;
+  }
+  getRegistredUser() {
+    return this.regitredUser;
+  }
+
+
+  validateEmail(code : string){
+    return this.http.get<User>(this.apiURL+'/verifyEmail/'+code);
     }
 }

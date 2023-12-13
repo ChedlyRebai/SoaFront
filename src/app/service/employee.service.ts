@@ -44,8 +44,14 @@ private createHeaders(): HttpHeaders {
     jwt = "Bearer "+jwt;
     console.log(jwt);
     let httpHeaders = new HttpHeaders({"Authorization":jwt})
+   /* this.http.post("http://localhost:3000/sendsms",{tel:emp.phoneNumber,message:"votre compte a été crée avec succés"})
+    .subscribe(data=>{ console.log(data)})*/
+    this.http.post("http://localhost:3000/send-email",{to:emp.email,subject:"copmte creation",text:"votre compte a été crée avec succés"})
+    .subscribe(data=>{ console.log(data)})
+
     return this.http.post<Employee>(`${this.apiURL}/addemp`, emp, { headers:httpHeaders });
   }
+
 
   updateEmployee(emp: Employee):Observable<Employee>{
     let jwt = this.authService.getToken();
@@ -62,6 +68,7 @@ private createHeaders(): HttpHeaders {
     let httpHeaders = new HttpHeaders({"Authorization":jwt})
     return this.http.get<Employee[]>(`${this.apiURL}/getname/${name}`,{ headers:httpHeaders })
   }
+
 
   deleteEmployee(id : number){
     let jwt = this.authService.getToken();
@@ -100,10 +107,25 @@ private createHeaders(): HttpHeaders {
     console.log(imageFormData);
     console.log(file);
     console.log(filename);
-    
-    
     return this.http.post<Image>(url, imageFormData , { headers:httpHeaders });
     }
+
+    uploadImageemployee(file: File, filename: string, id: number): Observable<any> {
+      let jwt = this.authService.getToken();
+    jwt = "Bearer "+jwt;
+    console.log(jwt);
+    let httpHeaders = new HttpHeaders({"Authorization":jwt})
+   
+      const imageFormData = new FormData();
+      imageFormData.append('image', file, filename);
+      const url = `http://localhost:10001/api/image/uplaodImageemployee/${id}`;
+      let res:any=this.http.post(url, imageFormData , { headers:httpHeaders });
+      console.log(res);
+      return res;
+    }
+
+
+
 
 
     loadImage(id: number): Observable<Image> {
@@ -111,11 +133,42 @@ private createHeaders(): HttpHeaders {
     jwt = "Bearer "+jwt;
     console.log(jwt);
     let httpHeaders = new HttpHeaders({"Authorization":jwt})
-   
       const url = `http://localhost:10001/api/image/get/info/${id}`;
-      let i:any =this.http.get<Image>(url);
+      let i:any =this.http.get<Image>(url,{ headers:httpHeaders });
       console.log(i);
       return this.http.get<Image>(url,{ headers:httpHeaders });
     }
+
+    deleteImage(id:number){
+      let jwt = this.authService.getToken();
+    jwt = "Bearer "+jwt;
+    console.log(jwt);
+    let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      const url = `http://localhost:10001/api/image/delete/${id}`;
+      return this.http.delete(url,{ headers:httpHeaders });
+    }
+
+    uploadImageFS(file: File, filename: string, idProd : number): Observable<any>{
+      let jwt = this.authService.getToken();
+    jwt = "Bearer "+jwt;
+    console.log(jwt);
+    let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      const imageFormData = new FormData();
+      imageFormData.append('image', file, filename);
+      const url = `${this.apiURL + '/image/uploadFS'}/${idProd}`;
+      return this.http.post(url, imageFormData,{ headers:httpHeaders });
+      }
+
+    
+
+
+    supprimerImage(id : number) {
+      let jwt = this.authService.getToken();
+      jwt = "Bearer "+jwt;
+      console.log(jwt);
+      let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      const url = `http://localhost:10001/api/image/delete/${id}`;
+      return this.http.delete(url, { headers:httpHeaders });
+      }
 
     }
